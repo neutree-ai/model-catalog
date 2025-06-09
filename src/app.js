@@ -265,58 +265,17 @@ class ModelCatalogApp {
     if (this.selectedModels.size === 0) return;
 
     const selectedModelData = this.models.filter(model => this.selectedModels.has(model.id));
+    const originalYamlData = selectedModelData.map(model => model.originalYaml);
 
-    // Generate YAML for multiple models
-    let yaml = '';
-
-    if (selectedModelData.length === 1) {
-      // Single model - return original YAML
-      yaml = this.modelToYaml(selectedModelData[0].originalYaml);
+    // Use js-yaml to dump the data directly
+    let yaml;
+    if (originalYamlData.length === 1) {
+      yaml = jsyaml.dump(originalYamlData[0], { indent: 2, lineWidth: -1 });
     } else {
-      // Multiple models - create a list
-      yaml = selectedModelData.map(model => this.modelToYaml(model.originalYaml)).join('\n---\n');
+      yaml = originalYamlData.map(data => jsyaml.dump(data, { indent: 2, lineWidth: -1 })).join('---\n');
     }
 
     this.showYamlModal(yaml);
-  }
-
-  modelToYaml(modelData) {
-    // Convert model object back to YAML format
-    return `apiVersion: ${modelData.apiVersion}
-kind: ${modelData.kind}
-metadata:
-  name: ${modelData.metadata.name}
-  display_name: ${modelData.metadata.display_name}
-  labels:${modelData.metadata.labels?.icon_url ? `
-    icon_url: '${modelData.metadata.labels.icon_url}'` : ''}${modelData.metadata.labels?.hf_repo_url ? `
-    hf_repo_url: '${modelData.metadata.labels.hf_repo_url}'` : ''}
-spec:
-  model:
-    registry: '${modelData.spec.model.registry || ''}'
-    name: ${modelData.spec.model.name}
-    file: ${modelData.spec.model.file}
-    version: ${modelData.spec.model.version}
-    task: ${modelData.spec.model.task}
-  engine:
-    engine: ${modelData.spec.engine.engine}
-    version: ${modelData.spec.engine.version}
-  resources: {}
-  replicas:
-    num: ${modelData.spec.replicas.num}
-  deployment_options:
-    scheduler:
-      type: ${modelData.spec.deployment_options.scheduler.type}
-      virtual_nodes: ${modelData.spec.deployment_options.scheduler.virtual_nodes}
-      load_factor: ${modelData.spec.deployment_options.scheduler.load_factor}
-  variables:
-    RAY_SCHEDULER_TYPE: ${modelData.spec.variables.RAY_SCHEDULER_TYPE}
-    engine_args:
-      tensor_parallel_size: ${modelData.spec.variables.engine_args.tensor_parallel_size}
-      max_model_len: ${modelData.spec.variables.engine_args.max_model_len}
-      enforce_eager: ${modelData.spec.variables.engine_args.enforce_eager}
-      gpu_memory_utilization: ${modelData.spec.variables.engine_args.gpu_memory_utilization}
-      enable_chunked_prefill: ${modelData.spec.variables.engine_args.enable_chunked_prefill}
-      served_model_name: ${modelData.spec.variables.engine_args.served_model_name}`;
   }
 
   showYamlModal(yaml) {
