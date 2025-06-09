@@ -23,6 +23,11 @@ interface HFModelMeta {
   // subset of HF /api/models response we care about
   pipeline_tag?: string;
   siblings: SiblingFile[];
+  id?: string; // full model name like "microsoft/DialoGPT-medium"
+  author?: string; // author/organization name
+  cardData?: {
+    thumbnail?: string; // icon/thumbnail URL
+  };
 }
 
 const DEFAULT_SCHEDULER = {
@@ -147,6 +152,32 @@ function slugifyName(repo: string): string {
     .replace(/(^-|-$)/g, "");
 }
 
+function buildDisplayName(meta: HFModelMeta, repo: string): string {
+  // Try to use the model ID as display name, fallback to repo name
+  if (meta.id) {
+    return meta.id;
+  }
+  return repo;
+}
+
+function buildLabels(meta: HFModelMeta, owner: string, repo: string): Record<string, string> {
+  const labels: Record<string, string> = {};
+
+  // Priority 1: Use thumbnail from cardData if available
+  if (meta.cardData?.thumbnail) {
+    labels.icon_url = meta.cardData.thumbnail;
+  } else {
+    // Priority 2: Use HuggingFace social thumbnail for the organization/user
+    // This provides high-quality avatars for HF organizations
+    labels.icon_url = `https://cdn-thumbnails.huggingface.co/social-thumbnails/${owner}.png`;
+  }
+
+  // Add original HuggingFace repo URL for traceability
+  labels.hf_repo_url = `https://huggingface.co/${owner}/${repo}`;
+
+  return labels;
+}
+
 function buildCatalog(
   { owner, repo }: { owner: string; repo: string },
   meta: HFModelMeta
@@ -156,12 +187,17 @@ function buildCatalog(
 
   // metadata.name uses repo slug; workspace omitted
   const name = slugifyName(repo);
+  const displayName = buildDisplayName(meta, repo);
+  const labels = buildLabels(meta, owner, repo);
+
   const catalog: Record<string, unknown> = {
     apiVersion: "v1",
     kind: "ModelCatalog",
     metadata: {
       name,
+      display_name: displayName,
       // workspace intentionally left blank for UI to fill
+      labels,
     },
     spec: {
       model: {
