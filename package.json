@@ -1,0 +1,20 @@
+{
+  "name": "neutree-model-catalog-ui",
+  "version": "1.0.0",
+  "description": "Static UI for Neutree Model Catalog",
+  "main": "index.js",
+  "scripts": {
+    "build": "deno run --allow-read --allow-write --allow-run scripts/build.ts",
+    "build:css": "tailwindcss -i src/styles/input.css -o dist/styles.css --minify",
+    "dev": "deno run --allow-read --allow-write --allow-run --allow-net scripts/watch.ts",
+    "watch:css": "tailwindcss -i src/styles/input.css -o dist/styles.css --watch",
+    "prepare-data": "deno run --allow-read --allow-write scripts/prepare-data.ts",
+    "hf2catalog": "deno run --allow-net scripts/hf2catalog.ts"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.0"
+  },
+  "engines": {
+    "node": ">=16"
+  }
+}

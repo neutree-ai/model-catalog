@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: ModelCatalog
+metadata:
+  name: nomic-embed-text-v1-gguf
+  display_name: nomic-ai/nomic-embed-text-v1-GGUF
+  labels:
+    icon_url: 'https://cdn-thumbnails.huggingface.co/social-thumbnails/nomic-ai.png'
+    hf_repo_url: 'https://huggingface.co/nomic-ai/nomic-embed-text-v1-GGUF'
+spec:
+  model:
+    registry: ''
+    name: nomic-ai/nomic-embed-text-v1-GGUF
+    file: nomic-embed-text-v1.Q2_K.gguf
+    version: latest
+    task: text-embedding
+  engine:
+    engine: llama-cpp
+    version: v1
+  resources: {}
+  replicas:
+    num: 1
+  deployment_options:
+    scheduler:
+      type: consistent_hash
+      virtual_nodes: 150
+      load_factor: 1.25
+  variables:
+    RAY_SCHEDULER_TYPE: consistent_hash

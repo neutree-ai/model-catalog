@@ -103,3 +103,7 @@ temp/
 dist/
 build/
 out/
+
+# Generated files
+src/data.js
+src/data.yaml
