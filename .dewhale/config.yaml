@@ -1,0 +1,14 @@
+llm:
+  provider: google
+  model: gemini-2.0-flash
+  maxTokens: 8192
+  maxSteps: 3
+  maxRetries: 5
+mcp:
+  servers:
+    - type: stdio
+      command: deno
+      args:
+        - run
+        - "-A"
+        - jsr:@arcfra/neutree-mcp-servers/servers/hf2catalog
