@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: ModelCatalog
+metadata:
+  name: nomic-embed-text-v1
+  display_name: nomic-ai/nomic-embed-text-v1
+  labels:
+    icon_url: 'https://cdn-thumbnails.huggingface.co/social-thumbnails/nomic-ai.png'
+    hf_repo_url: 'https://huggingface.co/nomic-ai/nomic-embed-text-v1'
+spec:
+  model:
+    registry: ''
+    name: nomic-ai/nomic-embed-text-v1
+    file: model.safetensors
+    version: latest
+    task: text-embedding
+  engine:
+    engine: vllm
+    version: v1
+  resources: {}
+  replicas:
+    num: 1
+  deployment_options:
+    scheduler:
+      type: consistent_hash
+      virtual_nodes: 150
+      load_factor: 1.25
+  variables:
+    RAY_SCHEDULER_TYPE: consistent_hash
+    engine_args:
+      tensor_parallel_size: 1
+      max_model_len: 32768
+      enforce_eager: true
+      gpu_memory_utilization: 0.95
+      enable_chunked_prefill: true
+      served_model_name: nomic-ai/nomic-embed-text-v1
