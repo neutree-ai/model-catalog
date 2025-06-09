@@ -95,6 +95,12 @@ async function copyFiles() {
     await copy(join(SRC_DIR, "data.yaml"), join(DIST_DIR, "data.yaml"));
   }
 
+  // Copy .nojekyll file for GitHub Pages
+  const nojekyllExists = await exists(join(SRC_DIR, ".nojekyll"));
+  if (nojekyllExists) {
+    await copy(join(SRC_DIR, ".nojekyll"), join(DIST_DIR, ".nojekyll"));
+  }
+
   // Copy any static assets if they exist
   const staticDir = join(SRC_DIR, "static");
   const staticExists = await exists(staticDir);

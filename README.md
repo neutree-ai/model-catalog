@@ -8,6 +8,41 @@ A static web interface for browsing and managing Neutree model catalog. Built wi
 - 🔍 **Search & Filter**: Find models by name, task type, or other criteria
 - ✅ **Multi-Selection**: Select individual models or use bulk selection
 - 📋 **YAML Generation**: Generate complete YAML configurations for selected models
+- 🚀 **Auto Deployment**: Automatically deploys to GitHub Pages on push
+
+## 🚀 Deployment
+
+### GitHub Pages (Automated)
+
+This project includes GitHub Actions workflow for automatic deployment to GitHub Pages:
+
+1. **Enable GitHub Pages** in your repository settings:
+
+   - Go to Settings → Pages
+   - Set Source to "GitHub Actions"
+
+2. **Push to main branch** - the workflow will automatically:
+
+   - Build the project using Deno and npm
+   - Deploy to GitHub Pages
+   - Your site will be available at `https://<username>.github.io/<repository-name>`
+
+3. **Manual deployment** (if needed):
+   - Go to Actions tab
+   - Run "Deploy to GitHub Pages" workflow manually
+
+### Local Development
+
+```bash
+# Install dependencies
+npm install
+
+# Start development server (with file watching)
+npm run dev
+
+# Build for production
+npm run build
+```
 
 ## 🎯 How to Use
 
