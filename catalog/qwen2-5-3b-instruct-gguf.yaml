@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: ModelCatalog
+metadata:
+  name: qwen2-5-3b-instruct-gguf
+  display_name: Qwen/Qwen2.5-3B-Instruct-GGUF
+  labels:
+    icon_url: 'https://cdn-thumbnails.huggingface.co/social-thumbnails/Qwen.png'
+    hf_repo_url: 'https://huggingface.co/Qwen/Qwen2.5-3B-Instruct-GGUF'
+spec:
+  model:
+    registry: ''
+    name: Qwen/Qwen2.5-3B-Instruct-GGUF
+    file: '*8_0.gguf'
+    version: latest
+    task: text-generation
+  engine:
+    engine: llama-cpp
+    version: v1
+  resources:
+    cpu: 2
+    memory: 2
+  replicas:
+    num: 1
+  deployment_options:
+    scheduler:
+      type: pow2
+  variables:
+    RAY_SCHEDULER_TYPE: pow2
+    engine_args: {}

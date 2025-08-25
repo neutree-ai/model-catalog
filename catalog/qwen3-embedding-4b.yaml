@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: ModelCatalog
+metadata:
+  name: qwen3-embedding-4b
+  display_name: Qwen/Qwen3-Embedding-4B
+  labels:
+    icon_url: 'https://cdn-thumbnails.huggingface.co/social-thumbnails/Qwen.png'
+    hf_repo_url: 'https://huggingface.co/Qwen/Qwen3-Embedding-4B'
+spec:
+  model:
+    registry: ''
+    name: Qwen/Qwen3-Embedding-4B
+    file: model-00001-of-00002.safetensors
+    version: latest
+    task: text-embedding
+  engine:
+    engine: vllm
+    version: v1
+  resources:
+    cpu: 1
+    memory: 1
+  replicas:
+    num: 1
+  deployment_options:
+    scheduler:
+      type: pow2
+  variables:
+    RAY_SCHEDULER_TYPE: pow2
+    engine_args:
+      served_model_name: Qwen/Qwen3-Embedding-4B

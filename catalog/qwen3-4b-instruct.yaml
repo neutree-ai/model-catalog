@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: ModelCatalog
+metadata:
+  name: qwen3-4b-instruct
+  display_name: Qwen/Qwen3-4B-Instruct-2507
+  labels:
+    icon_url: 'https://cdn-thumbnails.huggingface.co/social-thumbnails/Qwen.png'
+    hf_repo_url: 'https://huggingface.co/Qwen/Qwen3-4B-Instruct-2507'
+spec:
+  model:
+    registry: ''
+    name: Qwen/Qwen3-4B-Instruct-2507
+    file: model-00001-of-00003.safetensors
+    version: latest
+    task: text-generation
+  engine:
+    engine: vllm
+    version: v1
+  resources:
+    cpu: 2
+    memory: 2
+  replicas:
+    num: 1
+  deployment_options:
+    scheduler:
+      type: consistent_hash
+      virtual_nodes: 150
+      load_factor: 1.25
+  variables:
+    RAY_SCHEDULER_TYPE: consistent_hash
+    engine_args:
+      tensor_parallel_size: 1
+      max_model_len: 4096
+      enforce_eager: true
+      gpu_memory_utilization: 0.95
+      enable_chunked_prefill: true
+      tool_call_parser: hermes
+      served_model_name: Qwen/Qwen3-4B-Instruct-2507

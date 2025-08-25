@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: ModelCatalog
+metadata:
+  name: bge-reranker-v2-m3
+  display_name: BAAI/bge-reranker-v2-m3
+  labels:
+    icon_url: 'https://cdn-thumbnails.huggingface.co/social-thumbnails/BAAI.png'
+    hf_repo_url: 'https://huggingface.co/BAAI/bge-reranker-v2-m3'
+spec:
+  model:
+    registry: ''
+    name: BAAI/bge-reranker-v2-m3
+    file: model.safetensors
+    version: latest
+    task: text-rerank
+  engine:
+    engine: vllm
+    version: v1
+  resources:
+    cpu: 1
+    memory: 1
+  replicas:
+    num: 1
+  deployment_options:
+    scheduler:
+      type: pow2
+  variables:
+    RAY_SCHEDULER_TYPE: pow2
+    engine_args:
+      served_model_name: BAAI/bge-reranker-v2-m3

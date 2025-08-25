@@ -16,13 +16,13 @@ spec:
   engine:
     engine: llama-cpp
     version: v1
-  resources: {}
+  resources:
+    cpu: 1
+    memory: 1
   replicas:
     num: 1
   deployment_options:
     scheduler:
-      type: consistent_hash
-      virtual_nodes: 150
-      load_factor: 1.25
+      type: pow2
   variables:
-    RAY_SCHEDULER_TYPE: consistent_hash
+    RAY_SCHEDULER_TYPE: pow2
