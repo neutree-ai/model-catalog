@@ -29,8 +29,10 @@ spec:
     engine_args:
       tensor_parallel_size: 1
       max_model_len: 32768
-      enforce_eager: true
+      enforce_eager: false
       gpu_memory_utilization: 0.95
       enable_chunked_prefill: true
       served_model_name: Qwen/Qwen3-32B-FP8
       tool_call_parser: hermes
+      enable_reasoning: true
+      reasoning_parser: deepseek_r1

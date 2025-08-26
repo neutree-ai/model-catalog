@@ -29,7 +29,7 @@ spec:
     engine_args:
       tensor_parallel_size: 1
       max_model_len: 32768
-      enforce_eager: true
+      enforce_eager: false
       gpu_memory_utilization: 0.95
       enable_chunked_prefill: true
       served_model_name: deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B
