@@ -32,5 +32,6 @@ spec:
       enforce_eager: true
       gpu_memory_utilization: 0.95
       enable_chunked_prefill: true
+      tool_call_parser: hermes
       served_model_name: Qwen/Qwen3-0.6B
 
