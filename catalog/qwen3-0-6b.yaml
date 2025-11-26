@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: ModelCatalog
+metadata:
+  name: qwen3-0-6b
+  display_name: Qwen/Qwen3-0.6B
+  labels:
+    icon_url: 'https://cdn-thumbnails.huggingface.co/social-thumbnails/Qwen.png'
+    hf_repo_url: 'https://huggingface.co/Qwen/Qwen3-0.6B'
+spec:
+  model:
+    registry: ''
+    name: Qwen/Qwen3-0.6B
+    file: model.safetensors
+    version: latest
+    task: text-generation
+  engine:
+    engine: vllm
+    version: v1
+  resources: {}
+  replicas:
+    num: 1
+  deployment_options:
+    scheduler:
+      type: consistent_hash
+      virtual_nodes: 150
+      load_factor: 1.25
+  variables:
+    RAY_SCHEDULER_TYPE: consistent_hash
+    engine_args:
+      tensor_parallel_size: 1
+      max_model_len: 32768
+      enforce_eager: true
+      gpu_memory_utilization: 0.95
+      enable_chunked_prefill: true
+      served_model_name: Qwen/Qwen3-0.6B
+
