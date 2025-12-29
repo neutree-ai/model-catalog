@@ -15,7 +15,7 @@ spec:
     task: text-embedding
   engine:
     engine: vllm
-    version: v1
+    version: v0.8.5
   resources:
     cpu: 1
     memory: 1

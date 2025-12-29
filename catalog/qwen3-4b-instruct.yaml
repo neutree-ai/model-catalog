@@ -15,7 +15,7 @@ spec:
     task: text-generation
   engine:
     engine: vllm
-    version: v1
+    version: v0.8.5
   resources:
     cpu: 2
     memory: 2
