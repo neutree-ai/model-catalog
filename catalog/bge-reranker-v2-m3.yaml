@@ -11,7 +11,7 @@ spec:
     registry: ''
     name: BAAI/bge-reranker-v2-m3
     file: model.safetensors
-    version: latest
+    version: ""
     task: text-rerank
   engine:
     engine: vllm

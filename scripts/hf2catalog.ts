@@ -9,7 +9,7 @@
  */
 
 import { parse } from "https://deno.land/std@0.224.0/flags/mod.ts";
-import { hf2catalog } from "jsr:@arcfra/neutree-mcp-servers@0.3.5/servers/hf2catalog/hf2catalog";
+import { hf2catalog } from "jsr:@arcfra/neutree-mcp-servers@0.3.6/servers/hf2catalog/hf2catalog";
 
 async function main() {
   const {

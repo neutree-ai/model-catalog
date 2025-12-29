@@ -11,7 +11,7 @@ spec:
     registry: ''
     name: Qwen/Qwen3-0.6B
     file: model.safetensors
-    version: latest
+    version: ""
     task: text-generation
   engine:
     engine: vllm

@@ -11,7 +11,7 @@ spec:
     registry: ''
     name: Qwen/Qwen3-32B-FP8
     file: model-00001-of-00007.safetensors
-    version: latest
+    version: ""
     task: text-generation
   engine:
     engine: vllm

@@ -11,7 +11,7 @@ spec:
     registry: ''
     name: nomic-ai/nomic-embed-text-v1-GGUF
     file: nomic-embed-text-v1.Q2_K.gguf
-    version: latest
+    version: ""
     task: text-embedding
   engine:
     engine: llama-cpp

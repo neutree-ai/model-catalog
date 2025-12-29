@@ -11,7 +11,7 @@ spec:
     registry: ''
     name: Qwen/Qwen2.5-3B-Instruct-GGUF
     file: '*8_0.gguf'
-    version: latest
+    version: ""
     task: text-generation
   engine:
     engine: llama-cpp
