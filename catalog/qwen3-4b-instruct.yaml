@@ -17,8 +17,8 @@ spec:
     engine: vllm
     version: v0.8.5
   resources:
-    cpu: 2
-    memory: 2
+    cpu: "2"
+    memory: "2"
   replicas:
     num: 1
   deployment_options:
