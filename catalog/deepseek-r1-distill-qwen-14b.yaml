@@ -10,7 +10,6 @@ spec:
   model:
     registry: ''
     name: deepseek-ai/DeepSeek-R1-Distill-Qwen-14B
-    file: model-00001-of-000004.safetensors
     version: ""
     task: text-generation
   engine:

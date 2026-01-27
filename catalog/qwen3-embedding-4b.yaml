@@ -10,7 +10,6 @@ spec:
   model:
     registry: ''
     name: Qwen/Qwen3-Embedding-4B
-    file: model-00001-of-00002.safetensors
     version: ""
     task: text-embedding
   engine:

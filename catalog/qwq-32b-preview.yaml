@@ -10,7 +10,6 @@ spec:
   model:
     registry: ''
     name: Qwen/QwQ-32B-Preview
-    file: model-00001-of-00017.safetensors
     version: ""
     task: text-generation
   engine:

@@ -10,7 +10,6 @@ spec:
   model:
     registry: ''
     name: BAAI/bge-reranker-v2-m3
-    file: model.safetensors
     version: ""
     task: text-rerank
   engine:

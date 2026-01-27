@@ -10,7 +10,6 @@ spec:
   model:
     registry: ''
     name: Qwen/Qwen3-4B-Instruct-2507
-    file: model-00001-of-00003.safetensors
     version: ""
     task: text-generation
   engine:
