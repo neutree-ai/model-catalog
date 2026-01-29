@@ -15,7 +15,7 @@ spec:
     task: text-generation
   engine:
     engine: llama-cpp
-    version: v0.8.5
+    version: v0.3.7
   resources:
     cpu: "2"
     memory: "2"
