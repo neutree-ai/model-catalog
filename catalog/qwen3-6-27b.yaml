@@ -1,0 +1,104 @@
+apiVersion: v1
+kind: ModelCatalog
+metadata:
+  name: qwen3-6-27b
+  workspace: default
+  annotations:
+    recipe.vllm.ai/hardware-verified: "L40S"
+spec:
+  engine:
+    engine: vllm
+    version: v0.24.0
+  base:
+    engine_args:
+      reasoning_parser: qwen3
+  variants:
+    bf16:
+      description: "BF16 full-precision weights — 4x L40S (TP4); sized for 256K context x 4 concurrent seqs."
+      model:
+        registry: huggingface
+        name: Qwen/Qwen3.6-27B
+        task: text-generation
+        info:
+          parameter_count: "27B"
+          quantization: bf16
+          context_length: "262K"
+          architecture: dense
+      resources:
+        gpu: "4"
+        accelerator:
+          type: nvidia
+          product: L40S
+      vram_minimum_gb: 150
+    fp8:
+      description: "Official FP8 checkpoint — 4x L40S (TP4); sized for 256K context x 4 concurrent seqs."
+      model:
+        registry: huggingface
+        name: Qwen/Qwen3.6-27B-FP8
+        task: text-generation
+        info:
+          parameter_count: "27B"
+          quantization: fp8
+          context_length: "262K"
+          architecture: dense
+      resources:
+        gpu: "4"
+        accelerator:
+          type: nvidia
+          product: L40S
+      vram_minimum_gb: 120
+  features:
+    - name: max-model-len
+      group: Core
+      type: input
+      display_name: "Context window"
+      description: "Maximum sequence length (tokens) — pick a preset or type a custom value (native max 262144)."
+      input:
+        value_type: int
+        default: "262144"
+        min: 1
+        max: 262144
+        suggestions:
+          - { value: "8192",   label: "8K" }
+          - { value: "32768",  label: "32K" }
+          - { value: "131072", label: "128K" }
+          - { value: "262144", label: "256K" }
+      engine_args:
+        max_model_len: "${value}"
+    - name: max-num-seqs
+      group: Core
+      type: input
+      display_name: "Concurrency"
+      description: "Max concurrent sequences (decode parallelism / batch width)."
+      input:
+        value_type: int
+        default: "256"
+        min: 1
+        max: 1024
+      engine_args:
+        max_num_seqs: "${value}"
+    - name: text-only
+      group: Inference
+      display_name: "Text-only mode"
+      description: "Text-only mode — skip the vision encoder to free memory for KV cache."
+      default: false
+      engine_args:
+        language_model_only: true
+        enable_prefix_caching: true
+    - name: disable-thinking
+      group: Inference
+      display_name: "Disable reasoning"
+      description: "Disable reasoning / thinking output."
+      default: false
+      engine_args:
+        default_chat_template_kwargs:
+          enable_thinking: false
+    - name: mtp-speculative
+      group: Performance tuning
+      display_name: "MTP speculative decoding"
+      description: "MTP (multi-token prediction) speculative decoding for lower-latency decode."
+      default: false
+      engine_args:
+        speculative_config:
+          method: mtp
+          num_speculative_tokens: 1
