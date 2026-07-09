@@ -5,19 +5,22 @@ import { walk } from "https://deno.land/std@0.210.0/fs/mod.ts";
 
 interface ModelMetadata {
   name: string;
-  display_name: string;
-  labels: {
+  display_name?: string;
+  labels?: {
     icon_url?: string;
     hf_repo_url?: string;
   };
 }
 
+interface ModelInfo {
+  name: string;
+  task: string;
+  version?: string;
+}
+
 interface ModelSpec {
-  model: {
-    name: string;
-    task: string;
-    version: string;
-  };
+  model?: ModelInfo;
+  variants?: Record<string, { model: ModelInfo }>;
   engine: {
     engine: string;
     version: string;
@@ -59,13 +62,25 @@ async function collectYamlFiles(): Promise<ProcessedModel[]> {
         const yamlData = parse(content) as ModelCatalog;
 
         if (yamlData.kind === "ModelCatalog") {
+          // Variant-based catalogs have no spec.model; fall back to the
+          // first variant's model for name/task.
+          const firstVariant = yamlData.spec.variants
+            ? Object.values(yamlData.spec.variants)[0]
+            : undefined;
+          const model = yamlData.spec.model ?? firstVariant?.model;
+
+          if (!model) {
+            console.error(`Skipping ${entry.path}: no model found`);
+            continue;
+          }
+
           const processed: ProcessedModel = {
             id: yamlData.metadata.name,
             name: yamlData.metadata.name,
-            displayName: yamlData.metadata.display_name,
-            task: yamlData.spec.model.task,
+            displayName: yamlData.metadata.display_name ?? model.name,
+            task: model.task,
             engine: yamlData.spec.engine.engine,
-            version: yamlData.spec.model.version,
+            version: model.version ?? "",
             iconUrl: yamlData.metadata.labels?.icon_url,
             hfRepoUrl: yamlData.metadata.labels?.hf_repo_url,
             originalYaml: yamlData,
