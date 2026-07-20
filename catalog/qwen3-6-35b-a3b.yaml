@@ -24,11 +24,6 @@ spec:
           quantization: bf16
           context_length: "262K"
           architecture: moe
-      resources:
-        gpu: "4"
-        accelerator:
-          type: nvidia
-          product: L40S
       vram_minimum_gb: 110
     fp8:
       description: "Official FP8 checkpoint — 2x L40S (TP2); sized for 256K context x 4 concurrent seqs."
@@ -41,11 +36,6 @@ spec:
           quantization: fp8
           context_length: "262K"
           architecture: moe
-      resources:
-        gpu: "2"
-        accelerator:
-          type: nvidia
-          product: L40S
       vram_minimum_gb: 70
     nvfp4:
       description: "NVIDIA ModelOpt NVFP4 checkpoint — NVIDIA Blackwell (DGX Spark GB10); needs vLLM nightly / ModelOpt NVFP4 support."
@@ -58,11 +48,6 @@ spec:
           quantization: nvfp4
           context_length: "262K"
           architecture: moe
-      resources:
-        gpu: "1"
-        accelerator:
-          type: nvidia
-          product: GB200
       vram_minimum_gb: 40
       engine_args:
         trust_remote_code: true

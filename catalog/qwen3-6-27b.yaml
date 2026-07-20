@@ -24,11 +24,6 @@ spec:
           quantization: bf16
           context_length: "262K"
           architecture: dense
-      resources:
-        gpu: "4"
-        accelerator:
-          type: nvidia
-          product: L40S
       vram_minimum_gb: 150
     fp8:
       description: "Official FP8 checkpoint — 4x L40S (TP4); sized for 256K context x 4 concurrent seqs."
@@ -41,11 +36,6 @@ spec:
           quantization: fp8
           context_length: "262K"
           architecture: dense
-      resources:
-        gpu: "4"
-        accelerator:
-          type: nvidia
-          product: L40S
       vram_minimum_gb: 120
   features:
     - name: max-model-len
