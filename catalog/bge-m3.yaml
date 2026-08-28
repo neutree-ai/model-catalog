@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: ModelCatalog
+metadata:
+  name: bge-m3
+  display_name: BAAI/bge-m3
+  labels:
+    icon_url: 'https://cdn-thumbnails.huggingface.co/social-thumbnails/BAAI.png'
+    hf_repo_url: 'https://huggingface.co/BAAI/bge-m3'
+spec:
+  model:
+    registry: ''
+    name: BAAI/bge-m3
+    version: ""
+    task: text-embedding
+  engine:
+    engine: vllm
+    version: v0.8.5
+  resources:
+    cpu: "1"
+    memory: "1"
+  replicas:
+    num: 1
+  deployment_options:
+    scheduler:
+      type: pow2
+  variables:
+    RAY_SCHEDULER_TYPE: pow2
+    engine_args:
+      served_model_name: BAAI/bge-m3
